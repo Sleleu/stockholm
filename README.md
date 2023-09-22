@@ -25,6 +25,6 @@ At the same time, the script will store the encryption key in a `master.key`. fi
 
 Additionally, the following options are available: :
 
-`-h` | `--help`: display the help.
-`-v` | `--version`: show the version of the program.
-`-s` | `--silent`: the program will not produce any output.
+- `-h`, `--help`: display the help.
+- `-v`, `--version`: show the version of the program.
+- `-s`, `--silent`: the program will not produce any output.
