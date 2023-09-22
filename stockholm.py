@@ -77,10 +77,43 @@ def store_key(key: bytes) -> None:
         print(error)
         exit(1)
 
+def encrypt_file(filename: str):
+    print(filename)
+
+def encryption(key: bytes, path: str)-> None:
+    files = os.listdir(path)
+    for filename in files:
+        if os.path.isdir(os.path.join(path, filename)) is True:
+            encryption(key, os.path.join(path, filename))
+        else:
+            encrypt_file(filename)
+
+def get_home()-> str:
+    home: str = os.path.expanduser("~")
+    try:
+        assert home is not None, "stockholm.py: error: $HOME environnement variable is not defined"
+        assert os.path.isdir(home) is not False, "stockholm.py: error: $HOME environnement variable is incorrect"
+    except AssertionError as error:
+        print(error)
+        exit(1)
+    return home
+
+def get_path(home: str)-> str:
+    path: str = os.path.join(home, "infection")
+    try:
+        assert os.path.isdir(path) is not False, "stockholm.py: error: infection folder does not exist"
+    except AssertionError as error:
+        print(error)
+        exit(1)
+    return path
+
 if __name__ == "__main__":
     args = parse_arguments()
     if args.version:
         print("Stockholm 1.0.1")
         exit(0)
-    key = Fernet.generate_key()
+    home: str = get_home()
+    path: str = get_path(home)
+    key: bytes = Fernet.generate_key()
     store_key(key)
+    encryption(key, path)
