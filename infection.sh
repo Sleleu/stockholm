@@ -35,7 +35,12 @@ main() {
     else
         # create infection folder in home
         mkdir "$HOME/infection"
-        echo "Infection folder created."
+        if [ $? -eq 0 ]; then
+            echo "Infection folder created."
+        else
+            echo "Failed to create infection folder"
+            exit 1
+        fi
         cd "$HOME/infection"
         create_files
     fi
