@@ -12,6 +12,8 @@
 #                                                                              #
 # **************************************************************************** #
 
+import os, argparse
+
 wannacry_extensions: set[str] = {
     ".docx", ".ppam", ".sti", ".vcd", ".3gp", ".sch", ".myd", ".wb2",
     ".docb", ".potx", ".sldx", ".jpeg", ".mp4", ".dch", ".frm", ".slk",
@@ -48,5 +50,20 @@ wannacry_extensions: set[str] = {
 
 # Dechiffrement, possibilité de dechiffrer les fichiers avec la clé
 
+def parse_arguments():
+    desc = "Stockholm is a Python script designed for testing and \
+        gaining a better understanding of how ransomware functions. \
+        It encrypts data using the Fernet encryption method and appends \
+        the '.ft' extension to all files within the specified folder. This \
+        program exclusively operates within a folder named 'infection' located \
+        in the user's HOME directory and only encrypts files whose extensions have \
+        been targeted by Wannacry."
+    parser = argparse.ArgumentParser(description=desc)
+    parser.add_argument("-v", "--version", help="show the version of the program.")
+    return parser.parse_args()
+
 if __name__ == "__main__":
-    print("bang")
+    args = parse_arguments()
+    if args.version:
+        print("Stockholm 1.0.1")
+        exit(0)
