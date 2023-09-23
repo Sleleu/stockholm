@@ -11,8 +11,17 @@ all:
 	bash infection.sh
 
 run:
+	-bash infection.sh
 	$(PYTHON) $(NAME)
 
 clean:
 	bash infection.sh delete
-	rm -rf venv
+	rm -rf master.key 
+
+fclean: clean
+	rm -rfd venv
+	rm -rfd __pycache__
+
+re: clean all
+
+.PHONY: all clean fclean re run
