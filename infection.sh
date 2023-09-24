@@ -10,6 +10,8 @@ create_files() {
     echo "What a nice extension file !" > text.cub
     echo "I don't have any extension" > alone
     echo "int main(){return 0;}" > program.c
+    git clone https://github.com/Sleleu/ft_transcendence.git
+
     mkdir sub_folder && cd sub_folder
     echo "Welcome to level 2" > level2.txt
 
