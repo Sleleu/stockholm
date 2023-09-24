@@ -5,7 +5,7 @@ NAME = stockholm.py
 
 all:
 	python3 -m venv venv
-	venv/bin/pip install -r requirements.txt
+	venv/bin/pip3 install -r requirements.txt --use-pep517
 	chmod +x venv/bin/activate
 	$(VENV)/bin/activate
 	bash infection.sh

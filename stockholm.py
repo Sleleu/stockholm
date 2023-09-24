@@ -71,8 +71,8 @@ if __name__ == "__main__":
     path: str = get_path(home)
     silent: bool = args.silent
     if args.reverse:
-        decryption_key = args.reverse
-        decryption(decryption_key)
+        key_file = args.reverse[0]
+        decryption(key_file, path, silent)
     else:
         key: bytes = Fernet.generate_key()
         store_key(key)
