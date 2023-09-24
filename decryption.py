@@ -43,7 +43,7 @@ def decrypt_file(fernet: Fernet, filepath: str, silent: bool)-> None:
         decrypted_content = fernet.decrypt(file_content)
     except:
         print(f"{LIGHT_RED}| Failed to decrypt file: Invalid key{END}")
-        exit(1)
+        return
     try:
         with open(filepath, "wb") as file:
             file.write(decrypted_content)
