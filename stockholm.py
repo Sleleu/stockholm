@@ -17,6 +17,18 @@ from cryptography.fernet import Fernet
 from encryption import encryption
 from decryption import decryption
 
+LIGHT_PURPLE = "\033[1;35m"
+END = "\033[0m"
+
+ascii_header = """
+   ______           __    __        __    
+  / __/ /____  ____/ /__ / /  ___  / /_ _ 
+ _\ \/ __/ _ \/ __/  '_// _ \/ _ \/ /  ' \\
+/___/\__/\___/\__/_/\_\/_//_/\___/_/_/_/_/
+            Created by : https://github.com/Sleleu                              
+"""
+# Font infos : SmSlant by Glenn Chappell 6/93 - based on Small & Slant
+
 def parse_arguments():
     desc = "Stockholm is a Python script designed for testing and \
         gaining a better understanding of how ransomware functions. \
@@ -65,8 +77,10 @@ def get_path(home: str)-> str:
 if __name__ == "__main__":
     args = parse_arguments()
     if args.version:
-        print("Stockholm 1.0.1")
+        print(f"{LIGHT_PURPLE}Stockholm 1.0.1{END}")
         exit(0)
+    if args.silent is False:
+        print(f"{LIGHT_PURPLE}{ascii_header}{END}")
     home: str = get_home()
     path: str = get_path(home)
     silent: bool = args.silent

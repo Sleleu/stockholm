@@ -14,6 +14,11 @@ import os
 from cryptography.fernet import Fernet
 from encryption import wannacry_extensions
 
+LIGHT_GREEN = "\033[1;32m"
+YELLOW = "\033[1;33m"
+LIGHT_CYAN = "\033[1;36m"
+END = "\033[0m"
+
 def get_fernet(key_file)-> Fernet:
     try:
         with open(key_file, "rb") as file:
@@ -32,7 +37,7 @@ def decrypt_file(fernet: Fernet, filepath: str, silent: bool)-> None:
         print(error)
         return
     if silent is False:
-        print(f"Decryption of {filepath} ...", end="")
+        print(f"{LIGHT_CYAN}Decryption of {YELLOW}'{filepath}'{LIGHT_CYAN} ...{END}", end="")
     decrypted_content = fernet.decrypt(file_content)
     try:
         with open(filepath, "wb") as file:
@@ -41,7 +46,7 @@ def decrypt_file(fernet: Fernet, filepath: str, silent: bool)-> None:
         print(error)
         return
     if silent is False:
-        print("| SUCCESS")
+        print(f"{LIGHT_CYAN}| {LIGHT_GREEN}SUCCESS{END}")
 
 def decryption(key_file: str, path: str, silent: bool)-> None:
     fernet = get_fernet(key_file)
